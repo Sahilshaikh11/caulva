@@ -39,7 +39,18 @@ class _HomePageState extends State<HomePage> {
               QuickAttendanceCard(
                 subTitle: '7-IT A',
               ),
-              SizedBox(height: 16),
+              // SizedBox(height: 8),
+              const Opacity(
+                opacity: 0.3,
+                child: Divider(
+                  height: 20,
+                  thickness: 2,
+                  indent: 5,
+                  endIndent: 5,
+                  color: Colors.blue,
+                ),
+              ),
+              // SizedBox(height: 8),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
