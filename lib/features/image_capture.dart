@@ -6,15 +6,22 @@ import 'package:intl/intl.dart';
 
 class ImageCapture {
   static const url =
-      'http://192.168.85.139:3131/shot.jpg'; // Replace with your IP camera URL
+      'http://192.168.205.204:3131/shot.jpg'; // Replace with your IP camera URL
 
-  static Future<void> captureAndUploadImage() async {
-    final response = await http.get(Uri.parse(url));
+  static Future<bool> captureAndUploadImage() async {
+    try {
+      final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
-      await _uploadImageToFirebase(response.bodyBytes);
-    } else {
-      print('Failed to capture image: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        await _uploadImageToFirebase(response.bodyBytes);
+        return true; // Success
+      } else {
+        print('Failed to capture image: ${response.statusCode}');
+        return false; // Failure
+      }
+    } catch (e) {
+      print('Failed to capture image: $e');
+      return false; // Failure
     }
   }
 
@@ -36,17 +43,24 @@ class ImageCapture {
     }
   }
 
-  static void startImageCapture() {
-    const interval = Duration(seconds: 5); // Set your desired interval here
+  static Future<bool> startImageCapture() async {
+    const interval = Duration(seconds: 2); // Set your desired interval here
     int imagesCaptured = 0;
+    bool success = true;
+
+    final completer = Completer<bool>();
 
     Timer.periodic(interval, (Timer timer) async {
       if (imagesCaptured < 5) {
-        await captureAndUploadImage();
+        bool result = await captureAndUploadImage();
+        if (!result) success = false;
         imagesCaptured++;
       } else {
         timer.cancel(); // Stop the timer after capturing 5 images
+        completer.complete(success);
       }
     });
+
+    return completer.future;
   }
 }
