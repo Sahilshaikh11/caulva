@@ -1,3 +1,4 @@
+import 'package:caulva/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
@@ -12,12 +13,12 @@ class MyButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(25),
         decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+            color: AppColors.accentColor, borderRadius: BorderRadius.circular(8)),
         child: Center(
             child: Text(
           text,
           style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              color: AppColors.textColorWhite, fontWeight: FontWeight.bold, fontSize: 16),
         )),
       ),
     );

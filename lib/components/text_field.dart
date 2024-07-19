@@ -1,3 +1,4 @@
+import 'package:caulva/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
@@ -18,12 +19,12 @@ class MyTextField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: AppColors.textColorWhite),
           ),
-          fillColor: Colors.grey.shade200,
+          fillColor: AppColors.backgroundColor,
           filled: true,
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey[500])),
+          hintStyle: TextStyle(color: AppColors.headingTextColor)),
     );
   }
 }

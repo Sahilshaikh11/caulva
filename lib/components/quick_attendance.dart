@@ -1,4 +1,5 @@
 import 'package:caulva/features/image_capture.dart';
+import 'package:caulva/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class QuickAttendanceCard extends StatelessWidget {
@@ -22,7 +23,7 @@ class QuickAttendanceCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(left: 20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.textColorWhite,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -38,24 +39,23 @@ class QuickAttendanceCard extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: AppColors.accentColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          // Add your button functionality here
-                          ImageCapture.startImageCapture();
+                          _startImageCapture(context);
                         },
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text('Capture',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.textColorWhite,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16)),
                             SizedBox(width: 5),
-                            Icon(Icons.send, color: Colors.white, size: 20),
+                            Icon(Icons.send, color: AppColors.textColorWhite, size: 20),
                           ],
                         ),
                       ),
@@ -68,5 +68,77 @@ class QuickAttendanceCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _startImageCapture(BuildContext context) async {
+    // Show loading dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('Capturing Images'),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Start capturing images
+    bool success = await ImageCapture.startImageCapture();
+
+    Navigator.of(context).pop(); // Close the loading dialog
+
+    if (success) {
+      // Show success dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('Images captured successfully!'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the success dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Show failure dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Failed to capture images.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Retry'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the error dialog
+                  _startImageCapture(context); // Retry capturing images
+                },
+              ),
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the error dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
