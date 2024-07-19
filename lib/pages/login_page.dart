@@ -1,5 +1,6 @@
 import 'package:caulva/components/button.dart';
 import 'package:caulva/components/text_field.dart';
+import 'package:caulva/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               // logo
               const Icon(
                 Icons.lock,
-                color: Colors.blue,
+                color: AppColors.accentColor,
                 size: 100,
               ),
 
@@ -105,7 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text(
                       "Register now",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue),
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.accentColor),
                     ),
                   )
                 ],

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:caulva/components/appbar.dart';
 import 'package:caulva/components/attendance_stats.dart';
 import 'package:caulva/components/quick_attendance.dart';
+import 'package:caulva/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +25,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 240, 234, 234),
+      backgroundColor: AppColors.backgroundColor,
       appBar: const CustomAppBar(
-        title: 'Shahil Shaikh',
+        // title: 'Shahil Shaikh',
         subtitle: '210303108221',
         leading: Icon(Icons.person),
         actions: Icon(Icons.search),
+        height: 70,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -41,31 +43,31 @@ class _HomePageState extends State<HomePage> {
               ),
               // SizedBox(height: 8),
               const Opacity(
-                opacity: 0.3,
+                opacity: 0.05,
                 child: Divider(
                   height: 20,
                   thickness: 2,
                   indent: 5,
                   endIndent: 5,
-                  color: Colors.blue,
+                  color: AppColors.textColorBlack,
                 ),
               ),
-              // SizedBox(height: 8),
+              SizedBox(height: 6),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AttendanceStatCard(
                     icon: Icons.people,
-                    iconbg: Colors.blue,
-                    color: Colors.blue,
+                    iconbg: AppColors.summaryCard1,
+                    color: AppColors.summaryCard1,
                     title: 'Total Student',
                     value: '400',
                   ),
                   SizedBox(width: 16),
                   AttendanceStatCard(
-                    iconbg: Colors.orange,
+                    iconbg: AppColors.summaryCard2,
                     icon: Icons.attach_money,
-                    color: Colors.orange,
+                    color: AppColors.summaryCard2,
                     title: 'Leave',
                     value: '25',
                   ),
@@ -76,17 +78,17 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AttendanceStatCard(
-                    iconbg: Colors.pink,
+                    iconbg: AppColors.summaryCard3,
                     icon: Icons.payment,
-                    color: Colors.pink,
+                    color: AppColors.summaryCard3,
                     title: 'Absent',
                     value: '400',
                   ),
                   SizedBox(width: 16),
                   AttendanceStatCard(
-                    iconbg: Colors.lightBlue,
+                    iconbg: AppColors.summaryCard4,
                     icon: Icons.account_balance,
-                    color: Colors.lightBlue,
+                    color: AppColors.summaryCard4,
                     title: 'Present',
                     value: '315',
                   ),
